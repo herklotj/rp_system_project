@@ -17,43 +17,43 @@ FROM (SELECT MAX(loaddttm) AS ice_batch_last_loaded
 
    dimension_group: ice_batch_last_loaded {
      type: time
-     timeframes: [date, week, month, year]
+     timeframes: [date, time, week, month, year]
      sql: ${TABLE}.ice_batch_last_loaded ;;
    }
 
     dimension_group: ice_composite_last_loaded {
       type: time
-      timeframes: [date, week, month, year]
+      timeframes: [date, time, week, month, year]
       sql: ${TABLE}.ice_composite_last_loaded ;;
     }
 
-    dimension_group: exp_last_loaded {
+    dimension_group: expoclm_last_loaded {
       type: time
-      timeframes: [date, week, month, year]
+      timeframes: [date, time, week, month, year]
       sql: ${TABLE}.exp_last_loaded ;;
     }
 
     dimension_group: aap_start_loading {
       type: time
-      timeframes: [date, week, month, year]
+      timeframes: [date, time, week, month, year]
       sql: ${TABLE}.aap_start_loading ;;
     }
 
     dimension_group: aap_end_loading {
       type: time
-      timeframes: [date, week, month, year]
+      timeframes: [date, time, week, month, year]
       sql: ${TABLE}.aap_end_loading ;;
     }
 
     dimension_group: counter_fraud_last_loaded {
       type: time
-      timeframes: [date, week, month, year]
+      timeframes: [date, time, week, month, year]
       sql: ${TABLE}.counter_fraud_last_loaded ;;
     }
 
-  dimension_group: lk_last_loaded {
+  dimension_group: pmid_last_loaded {
     type: time
-    timeframes: [date, week, month, year]
+    timeframes: [date, time, week, month, year]
     sql: ${TABLE}.lk_last_loaded ;;
   }
  }
