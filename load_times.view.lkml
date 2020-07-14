@@ -2,8 +2,10 @@
    # Or, you could make this view a derived table, like this:
    derived_table: {
      sql: SELECT *
-FROM (SELECT MAX(loaddttm) AS ice_batch_last_loaded
-      FROM ice_dim_question_answer) batch
+FROM (SELECT MAX(loaddttm) AS ice_batch_policy_last_loaded
+      FROM ice_dim_question_answer) batch_pol
+     CROSS JOIN (SELECT MAX(loaddttm) AS ice_batch_claims_last_loaded
+      FROM ice_dim_claim) batch_clm
   CROSS JOIN (SELECT MAX(loaddttm) AS ice_composite_last_loaded
               FROM ice_aa_claim_financials) comp
   CROSS JOIN (SELECT MAX(exposure_asat) AS exp_last_loaded FROM expoclm) EXP
@@ -15,11 +17,18 @@ FROM (SELECT MAX(loaddttm) AS ice_batch_last_loaded
   CROSS JOIN (SELECT MAX(load_dttm) AS lk_last_loaded
               FROM lk_m_policy_history) lk ;;}
 
-   dimension_group: ice_batch_last_loaded {
+   dimension_group: ice_batch_policy_last_loaded {
      type: time
      timeframes: [date, time, week, month, year]
-     sql: ${TABLE}.ice_batch_last_loaded ;;
+     sql: ${TABLE}.ice_batch_policy_last_loaded ;;
    }
+
+  dimension_group: ice_batch_claims_last_loaded {
+    type: time
+    timeframes: [date, time, week, month, year]
+    sql: ${TABLE}.ice_batch_claims_last_loaded ;;
+  }
+
 
     dimension_group: ice_composite_last_loaded {
       type: time
