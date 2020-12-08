@@ -19,3 +19,5 @@ explore: aap_v_ice {}
 explore: acxiom_update {}
 
 explore: acxiom_quote_match_test {}
+
+explore: ra_refresh_motor {}
