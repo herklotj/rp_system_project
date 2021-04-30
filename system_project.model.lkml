@@ -25,3 +25,5 @@ explore: ra_refresh_motor {}
 explore: ice_transactions_by_audit_key {}
 
 explore: ice_transactions_by_accepted_date {}
+
+explore: ice_transactions_by_sale_date {}
