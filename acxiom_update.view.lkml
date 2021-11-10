@@ -9,7 +9,7 @@ FROM ((SELECT *,
        UNION ALL
        (SELECT *,
               '1' AS new
-       FROM acxiom_test)) a
+       FROM acxiom_new)) a
   LEFT JOIN postcode_geography b ON REPLACE (a.ae_post_code_name,' ','') = b.postcode
        ;;
    }
