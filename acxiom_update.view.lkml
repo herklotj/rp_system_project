@@ -3,13 +3,106 @@
    derived_table: {
      sql: SELECT a.*,
        b.postcode_area
-FROM ((SELECT *,
+FROM ((SELECT ilu_ikey,
+       ilu_akey,
+       ilu_outputtitle,
+       ilu_first,
+       ilu_sname,
+       ae_address_line_1,
+       ae_address_line_2,
+       ae_address_line_3,
+       ae_address_line_4,
+       ae_address_line_5,
+       ae_town_name,
+       ae_county_name,
+       ae_post_code_name,
+       ilu_marryd3,
+       ilu_hhstage2,
+       ilu_hhkids,
+       ilu_hhkid0004,
+       ilu_hhlenres,
+       ilu_hhdatehomebuilt,
+       ilu_ownrnt,
+       ilu_hhpropertytype,
+       pc_populationdensity,
+       ilu_hhsize,
+       ilu_hhcomposition,
+       ilu_occy3,
+       ilu_hhsocioecon,
+       ilu_hhearners,
+       ilu_hhunemployed,
+       ilu_hhafflu,
+       ilu_rowhol,
+       ilu_ftravel,
+       mod_hhccardpay,
+       mod_hhccardbalance,
+       ilu_numcreditcards,
+       ilu_persloan,
+       ilu_hhinvestrank,
+       ilu_hhinsurerank,
+       ilu_savingsplan,
+       ilu_privmedic,
+       ilu_funeral,
+       ilu_mobilecontract,
+       ilu_internetaccess,
+       ils_personicx_ind,
+       ilu_hhindulgerank,
+       qas_return_code,
+       qas_key,
+       load_dttm,
               '0' AS new
        FROM acxiom)
        UNION ALL
-       (SELECT *,
+       (SELECT ilu_complianceid AS ilu_ikey,
+       uprn AS ilu_akey,
+       ilu_outputtitle,
+       ilu_first,
+       ilu_sname,
+       ae_address_line_1,
+       ae_address_line_2,
+       ae_address_line_3,
+       ae_address_line_4,
+       ae_address_line_5,
+       ae_town_name,
+       ae_county_name,
+       ae_post_code_name,
+       ilu_marryd3,
+       ilu_hhstage2,
+       ilu_hhkids,
+       ilu_hhkid0004,
+       ilu_hhlenres,
+       ilu_hhdatehomebuilt,
+       ilu_ownrnt,
+       ilu_hhpropertytype,
+       pc_populationdensity,
+       ilu_hhsize,
+       ilu_hhcomposition,
+       ilu_occy3,
+       ilu_hhsocioecon,
+       ilu_hhearners,
+       ilu_hhunemployed,
+       ilu_hhafflu,
+       ilu_rowhol,
+       ilu_ftravel,
+       mod_hhccardpay,
+       mod_hhccardbalance,
+       ilu_numcreditcards,
+       ilu_persloan,
+       ilu_hhinvestrank,
+       ilu_hhinsurerank,
+       ilu_savingsplan,
+       ilu_privmedic,
+       ilu_funeral,
+       ilu_mobilecontract,
+       ilu_internetaccess,
+       ils_personicx_ind,
+       ilu_hhindulgerank,
+       qas_return_code,
+       qas_key,
+       load_dttm,
               '1' AS new
-       FROM acxiom_new)) a
+       FROM acxiom_new
+        )) a
   LEFT JOIN postcode_geography b ON REPLACE (a.ae_post_code_name,' ','') = b.postcode
        ;;
    }
@@ -182,7 +275,7 @@ FROM ((SELECT *,
 
   dimension: new {
     type: string
-    sql: ${TABLE}.new ;;
+    sql: case when ${TABLE}.new = 1 then 'New' else 'Current' end ;;
   }
 
   measure: amount_new {
@@ -207,6 +300,11 @@ FROM ((SELECT *,
     type:  number
     sql: 1.0*SUM(CASE WHEN ${TABLE}.new = 1 THEN 0 ELSE 1 END)
       ;;
-  }
+     }
 
- }
+  measure:  number_of_records {
+    type: number
+    sql: count(*) ;;
+
+  }
+}
